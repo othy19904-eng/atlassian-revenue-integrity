@@ -1,0 +1,52 @@
+name: "Runner Fleet Doctor"
+description: "Detect self-hosted GitHub Actions runners nearing version deprecation before jobs stop."
+author: "othy19904-eng"
+branding:
+  icon: "activity"
+  color: "orange"
+
+inputs:
+  token:
+    description: "GitHub token with read access to self-hosted runner inventory and deprecation data."
+    required: true
+  scope:
+    description: "Audit scope: organization or repository."
+    required: false
+    default: "organization"
+  owner:
+    description: "Organization login for organization scope. Defaults to GITHUB_REPOSITORY_OWNER."
+    required: false
+  repository:
+    description: "owner/repo for repository scope. Defaults to GITHUB_REPOSITORY."
+    required: false
+  warn_days:
+    description: "Warn when runtime deprecation is this many days away."
+    required: false
+    default: "14"
+  fail_on_risk:
+    description: "Fail if any runner is WARNING, CRITICAL, or EXPIRED."
+    required: false
+    default: "false"
+  include_offline:
+    description: "Include offline runners in the report."
+    required: false
+    default: "true"
+  api_url:
+    description: "GitHub API base URL. Defaults to GITHUB_API_URL or https://api.github.com."
+    required: false
+
+outputs:
+  status:
+    description: "Overall fleet status."
+  total_runners:
+    description: "Number of runners included in the report."
+  at_risk_runners:
+    description: "Number of WARNING, CRITICAL, or EXPIRED runners."
+  expired_runners:
+    description: "Number of expired runners."
+  report_json:
+    description: "Machine-readable JSON report."
+
+runs:
+  using: "node20"
+  main: "index.js"
