@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Audit self-hosted runners
-        uses: othy19904-eng/atlassian-revenue-integrity@main
+        uses: othy19904-eng/atlassian-revenue-integrity@v1
         with:
           scope: organization
           owner: your-org
